@@ -15,7 +15,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 @RunWith(SerenityRunner.class)
 public class WhenAddingTasks {
 
-    @Managed(driver = "chrome")
+    @Managed(uniqueSession = true, driver = "chrome")
     WebDriver webDriver;
 
     @Steps
@@ -37,8 +37,14 @@ public class WhenAddingTasks {
     // TODO: Exercise 2
     @Test
     public void addingMultipleTasks() {
+        listAction.openApplication();
         // Add "Feed The Cat" and "Walk the dog" to the list
+        listAction.addTasksWithName("Feed The Cat","Walk the dog");
         // Check that they all appear in the list
+        Serenity.reportThat("check if tasks list contains expected actions",
+                ()->assertThat(listAction.getTasks())
+                        .containsExactly("Feed The Cat","Walk the dog")
+                        .hasSize(2));
     }
 
 }
