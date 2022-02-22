@@ -4,7 +4,7 @@ import net.serenitybdd.core.Serenity;
 import net.serenitybdd.junit.runners.SerenityRunner;
 import net.thucydides.core.annotations.Managed;
 import net.thucydides.core.annotations.Steps;
-import org.assertj.core.api.Assertions;
+import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.openqa.selenium.WebDriver;
@@ -21,10 +21,13 @@ public class WhenAddingTasks {
     @Steps
     ListAction listAction;
 
-    // TODO: Exercise 1
+    @Before
+    public void openApplication(){
+        listAction.openApplication();
+    }
+
     @Test
     public void addingASingleTask() {
-        listAction.openApplication();
         // Add "Feed The Cat" to the list
         listAction.addTasksWithName("Feed The Cat");
         // Check that "Feed The Cat" appears in the list
@@ -34,10 +37,8 @@ public class WhenAddingTasks {
                         .hasSize(1));
     }
 
-    // TODO: Exercise 2
     @Test
     public void addingMultipleTasks() {
-        listAction.openApplication();
         // Add "Feed The Cat" and "Walk the dog" to the list
         listAction.addTasksWithName("Feed The Cat","Walk the dog");
         // Check that they all appear in the list
