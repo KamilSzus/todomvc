@@ -47,5 +47,4 @@ public class WhenAddingTasks {
                         .containsExactly("Feed The Cat","Walk the dog")
                         .hasSize(2));
     }
-
 }
