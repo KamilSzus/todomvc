@@ -6,6 +6,11 @@ import net.thucydides.core.annotations.Step;
 import java.util.Arrays;
 import java.util.List;
 
+import static todomvc.listAction.Form.COMPLETE_CHECKBOX;
+import static todomvc.listAction.Form.FILTERS_BY;
+import static todomvc.listAction.Form.NEW_TODO_TASK;
+import static todomvc.listAction.Form.TASKS_LIST;
+
 public class ListAction extends UIInteractionSteps {
 
     @Step("Adding task with name '{0}' to list")
@@ -13,7 +18,7 @@ public class ListAction extends UIInteractionSteps {
         Arrays.stream(tasks)
                 .toList()
                 .forEach((task)->
-                        $(".new-todo").typeAndEnter(task));
+                        $(NEW_TODO_TASK).typeAndEnter(task));
     }
 
     @Step("Open the TodoMVC application")
@@ -22,16 +27,16 @@ public class ListAction extends UIInteractionSteps {
     }
 
     public List<String> getTasks() {
-        return findAll(".todo-list label").textContents();
+        return findAll(TASKS_LIST).textContents();
     }
 
     @Step("Complete '{0} task'")
     public void completeTask(String task) {
-        $("//label[.='{0}']/preceding-sibling::input[@type='checkbox']",task).click();
+        $(COMPLETE_CHECKBOX,task).click();
     }
 
     @Step("filter by '{0}' task")
     public void filterBy(String state) {
-        $("//*[@class='filters']//a[.='{0}']",state).click();
+        $(FILTERS_BY,state).click();
     }
 }
