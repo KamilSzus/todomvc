@@ -2,7 +2,6 @@ package todomvc.listAction;
 
 import net.serenitybdd.core.steps.UIInteractionSteps;
 import net.thucydides.core.annotations.Step;
-import org.openqa.selenium.By;
 
 import java.util.Arrays;
 import java.util.List;
@@ -24,5 +23,15 @@ public class ListAction extends UIInteractionSteps {
 
     public List<String> getTasks() {
         return findAll(".todo-list label").textContents();
+    }
+
+    @Step("Complete '{0} task'")
+    public void completeTask(String task) {
+        $("//label[.='{0}']/preceding-sibling::input[@type='checkbox']",task).click();
+    }
+
+    @Step("filter by '{0}' task")
+    public void filterBy(String state) {
+        $("//*[@class='filters']//a[.='{0}']",state).click();
     }
 }

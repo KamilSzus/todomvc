@@ -14,9 +14,9 @@ import static net.serenitybdd.core.Serenity.*;
 import static org.assertj.core.api.Assertions.assertThat;
 
 @RunWith(SerenityRunner.class)
-public class WhenAddingTasks {
+public class WhenCompletingATask {
 
-    @Managed(uniqueSession = true, driver = "chrome")
+    @Managed(driver = "chrome")
     WebDriver webDriver;
 
     @Steps
@@ -28,24 +28,32 @@ public class WhenAddingTasks {
     }
 
     @Test
-    public void addingASingleTask() {
-        // Add "Feed The Cat" to the list
-        listAction.addTasksWithName("Feed The Cat");
-        // Check that "Feed The Cat" appears in the list
+    public void activeTasksShouldNotShowCompletedTasks() {
+        // Add "Feed the cat" and "Walk the dog" to the list
+        listAction.addTasksWithName("Feed The Cat","Walk the dog");
+        // Complete "Feed the cat"
+        listAction.completeTask("Feed The Cat");
+        // Filter by "Active"
+        listAction.filterBy("Active");
+        // Check that only "Walk the dog" appears
         reportThat("check if tasks list contains expected actions",
                 ()->assertThat(listAction.getTasks())
-                        .containsExactly("Feed The Cat")
+                        .containsExactly("Walk the dog")
                         .hasSize(1));
     }
 
     @Test
-    public void addingMultipleTasks() {
-        // Add "Feed The Cat" and "Walk the dog" to the list
+    public void completedTasksShouldNotShowActiveTasks() {
+        // Add "Feed the cat" and "Walk the dog" to the list
         listAction.addTasksWithName("Feed The Cat","Walk the dog");
-        // Check that they all appear in the list
+        // Complete "Feed the cat"
+        listAction.completeTask("Feed The Cat");
+        // Filter by "Completed"
+        listAction.filterBy("Completed");
+        // Check that only "Feed the cat" appears
         reportThat("check if tasks list contains expected actions",
                 ()->assertThat(listAction.getTasks())
-                        .containsExactly("Feed The Cat","Walk the dog")
-                        .hasSize(2));
+                        .containsExactly("Feed The Cat")
+                        .hasSize(1));
     }
 }
