@@ -25,6 +25,12 @@ public class ListAction extends UIInteractionSteps {
                         $(NEW_TODO_TASK).typeAndEnter(task));
     }
 
+    @Step("Adding task with name '{0}' to list")
+    public void addTasksWithName(List<String> tasks) {
+        tasks.forEach((task)->
+                        $(NEW_TODO_TASK).typeAndEnter(task));
+    }
+
     @Step("Open the TodoMVC application")
     public void openApplication(){
         openUrl("https://todomvc.com/examples/angularjs/#/");
