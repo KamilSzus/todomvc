@@ -33,7 +33,7 @@ public class ListAction extends UIInteractionSteps {
 
     @Step("Open the TodoMVC application")
     public void openApplication(){
-        openUrl("https://todomvc.com/examples/angularjs/#/");
+        openPageNamed("home");
     }
 
     public List<String> getTasks() {
